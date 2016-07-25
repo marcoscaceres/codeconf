@@ -80,7 +80,7 @@
  *********************************************/
 body {
   background: #111111;
-  background-image: url(img/bg-sandstone-2.png);
+  background-image: url(img/bg-sandstone-2.jpg);
   background-repeat:no-repeat;
   background-size:100% 100%;
   background-color: #111111; }
@@ -145,7 +145,7 @@ body:after {
   color: #0073AA;
   text-shadow: none;
   border: none; }
-  
+
 .reveal p{
   text-shadow:0 !important;
   font-family: "Open Sans Light";
