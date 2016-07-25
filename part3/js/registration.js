@@ -11,6 +11,7 @@
       console.info("Attempting to register SW");
       let reg = yield navigator.serviceWorker.getRegistration();
       if (reg) {
+        console.info("Already registered");
         return;
       }
       console.info("No registration, so register");
