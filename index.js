@@ -8,6 +8,10 @@ app.listen(3000, () => {
 
   ${"💖 CODE CONFERENCE JS WORKSHOP! 💖".underline.yellow}
 
+  ${"Slides".blue}:
+
+    ⭐️ ${"http://localhost:3000/slides/".underline}
+
   ${"Part 2".blue} - ${"Tutorial files are at:".grey}
 
     ⭐️ ${"http://localhost:3000/part2/docready.html".underline}
