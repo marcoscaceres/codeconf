@@ -31,7 +31,7 @@ app.listen(3000, () => {
 
     ⭐️ ${"http://localhost:3000/part2/xhr.html".underline}
 
-  ${"Part 3".blue} - ${"WebMob site:".grey}
+  ${"Part 3".blue} - ${"Service Workers:".grey}
 
     ⭐️ ${"http://localhost:3000/part3/".underline}
 
