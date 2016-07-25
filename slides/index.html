@@ -44,14 +44,20 @@
         <h1>Set up</h1>
         <p>Firefox or Chrome - ⚠️ No Safari or Edge yet 😢</p>
         <pre class="bash"><code>
-$ node --version 
+$ node --version
 # v6.0.0 or higher!
-$ git clone 
+$ git clone
 $ npm install
-$ npm install -g mocha 
+$ npm install -g mocha
 </code></pre>
       </section>
       <section data-background="images/journey.jpg">
+        <h2 style="color: black">Three part Journey</h2>
+        <ul>
+          <li class="fragment" style="color: white">New ES6 syntax/features.</li>
+          <li class="fragment" style="color: white">Asynchronous JS.</li>
+          <li class="fragment" style="color: white">Service Workers and Web APIs.</li>
+        </ul>
         <p class="attribution">Journey into the unknown aka The Mist by <a href="https://www.flickr.com/photos/timove/">TimOve</a></p>
       </section>
       <section data-background="images/shinny.svg" data-background-size="35%" data-background-position="bottom right">
@@ -68,7 +74,7 @@ $ npm install -g mocha
           <li class="fragment">Arrow functions</li>
         </ul>
       </section>
-      <section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
         <h2>But wait! there is more.</h2>
         <ul>
           <li class="fragment">Template literals.</li>
@@ -178,7 +184,7 @@ for(var elem in h1s){
 </code></pre>
       </section>
       <section data-background="images/bg_stars.svg" data-background-size="90%">
-        <h1><code>for ... of</code> (iterators)</h1>
+        <h1><code>for ... of</code> <br> (iterators)</h1>
       </section>
       <section>
         <pre class="javascript"><code contenteditable data-trim>
@@ -212,11 +218,10 @@ console.log(findEdible(fruits));
       <section data-background="images/disection.jpg">
         <pre class="javascript"><code contenteditable>
 
-func = function(params) { statements; }
+func = function(params) { statement; return 1; }
 
 
-
-arrow = (params) => { statements; }
+arrow = (params) => { statements; return 1; }
 
 
 
@@ -230,6 +235,9 @@ arrow = (params) => { statements; }
           <li class="fragment">1 statement, the "{}" are optional.</li>
           <li class="fragment">1 statement, "return" is optional.</li>
         </ul>
+        <pre class="javascript"><code contenteditable>
+        arrow = (param) => { return 1 + param; }
+      </code></pre>
       </section>
       <section>
         <pre class="javascript"><code contenteditable data-trim>//long form
@@ -721,7 +729,9 @@ barista.makeCoffee()
 var car1 = new Car("one"),
 var car2 = new Car("two"),
 var car3 = new Car("three"),
-var carRace = [car1.drive(), car2.drive(), car3.drive()];
+var carRace = [
+  car1.drive(), car2.drive(), car3.drive()
+];
 
 Promise.race(carRace).then(e => console.log(e));
 Promise.all(carRace).then(data => console.log(data));
@@ -811,7 +821,7 @@ obj[Symbol.iterator] = function() {
       </section>
       <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
         <h2>Problem</h2>
-        <p>Hard to represent lazy lists in JS.</p>
+        <p>Hard to represent lazy/computed lists in JS.</p>
       </section>
       <section>
         <h3>Generator functions</h3>
@@ -1035,14 +1045,12 @@ async(function* getJSON(url){
       </section>
       <section data-background="images/mapping_test.png" data-background-size="90%">
       </section>
-      <section data-background="images/mapping_test.png" data-background-size="90%">
-      </section> 
       <section>
         <h2>Bad times...</h2>
         <ul>
-          <li>Don't forget <code>yield</code>/<code>await</code></li>
-          <li><code>window.onload = async function foo(){...}</code></li>
-          <li><code>calling foo() with no `.catch`</code></li>
+          <li>Don't forget <code>yield</code>/<code>await</code><./li>
+          <li>Avoid assigning to event handlers.</li>
+          <li>calling <code>async foo()</code> with no <code>.catch</code>.</li>
         </ul>
       </section>
       <section data-background="images/shinny.svg" data-background-size="35%" data-background-position="bottom right">
@@ -1050,7 +1058,7 @@ async(function* getJSON(url){
       </section>
       <section data-background="images/shinny.svg" data-background-size="35%" data-background-position="bottom right">
         <h1>Part 3 - Putting ES6 to Work</h1>
-        <h2>Service Workers and realted APIs</h2>
+        <h2>Service Workers and related APIs</h2>
       </section>
       <section>
         <h2>We now can use...</h2>
@@ -1061,7 +1069,10 @@ async(function* getJSON(url){
         </ul>
       </section>
       <section>
-        <h2>Let's take a site offline!</h2>
+        <h2>Let's take a site <a href="http://localhost:3000/part3/">off line</a>!</h2>
+        <pre class="bash"><code>
+$ npm start
+        </code></pre>
       </section>
     </div>
   </div>
