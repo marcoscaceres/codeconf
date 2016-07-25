@@ -94,7 +94,7 @@ self.addEventListener("activate", (ev) => {
   ev.waitUntil(self.clients.claim());
 });
 
-self.addEventListener("fetch", function(ev) {
+self.addEventListener("fetch", (ev) => {
   console.info("Handling", ev.request.url, "going to network first...");
   ev.respondWith(SWTasks.networkFirst(ev.request, SITE_CACHE));
 });
