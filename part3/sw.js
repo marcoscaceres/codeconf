@@ -10,33 +10,32 @@ importScripts("js/lib/async.js");
 
 // // Set up Service Worker tasks
 // const SWTasks = {
-//   deleteAllCaches: async(function* () {
+//   deleteAllCaches: async(function*() {
 //     // Fill me in
 //   }),
-//   cacheSite: async(function* (ev, siteFiles) {
+//   cacheSite: async(function*(ev, siteFiles) {
 //     // Fill me in
 //   }),
-//   respondFromCache: async(function* (request, cacheName) {
+//   respondFromCache: async(function*(request, cacheName) {
 //     // Fill me in
 //   }),
-//   hasCacheEntry: async(function* (request, cacheName) {
+//   hasCacheEntry: async(function*(request, cacheName) {
 //     // Fill me in
 //   }),
 // };
 
 // // Let's set up life cycle listeners ("install", "activate", "fetch")
-self.addEventListener("install", async(function* (ev) {
+self.addEventListener("install", async(function*(ev) {
   // Fill me in
   console.log("install");
 }));
 
-self.addEventListener("activate", async(function* (ev) {
+self.addEventListener("activate", async(function*(ev) {
   // Fill me in
-    console.log("active");
+  console.log("active");
 }));
 
 self.addEventListener("fetch", function(ev) {
   // Fill me in
-    console.log("fetching", ev.request.url);
+  console.log("fetching", ev.request.url);
 });
-
