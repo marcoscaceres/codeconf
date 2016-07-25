@@ -1,0 +1,1119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Fundamentals of ECMAScript</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="css/theme/mozilla-sandstone.css" id="theme">
+  <link rel="stylesheet" href="css/reveal.css">
+  <!-- For syntax highlighting -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+  <!-- If the query includes 'print-pdf', include the PDF print sheet -->
+  <script>
+  if (window.location.search.match(/print-pdf/gi)) {
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = 'css/print/pdf.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+      <section data-background="images/shinny.svg" data-background-size="35%" data-background-position="bottom right">
+        <h1>Putting ES6 to work</h1>
+        <h2>Code 2016</h2>
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h2>Who?</h2>
+        <ul>
+          <li>Marcos Cáceres</li>
+          <li>@marcosc</li>
+          <li>github.com/marcoscaceres</li>
+          <li>DOM Team - Mozilla</li>
+        </ul>
+      </section>
+      <section>
+        <h1>Set up</h1>
+        <p>Firefox or Chrome - ⚠️ No Safari or Edge yet 😢</p>
+        <pre class="bash"><code>
+$ node --version 
+# v6.0.0 or higher!
+$ git clone 
+$ npm install
+$ npm install -g mocha 
+</code></pre>
+      </section>
+      <section data-background="images/journey.jpg">
+        <p class="attribution">Journey into the unknown aka The Mist by <a href="https://www.flickr.com/photos/timove/">TimOve</a></p>
+      </section>
+      <section data-background="images/shinny.svg" data-background-size="35%" data-background-position="bottom right">
+        <h1>New Shiny</h1>
+        <h2>Part 1 - Foundations</h2>
+      </section>
+      <section data-background="images/new_in_es6.svg">
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h2>New syntax and <br> operators</h2>
+        <ul>
+          <li class="fragment"><code>const</code>, <code>let</code>, <code>for...of</code></li>
+          <li class="fragment">Arguments defaults</li>
+          <li class="fragment">Arrow functions</li>
+        </ul>
+      </section>
+      <section>
+        <h2>But wait! there is more.</h2>
+        <ul>
+          <li class="fragment">Template literals.</li>
+          <li class="fragment">Map and Set.</li>
+          <li class="fragment">New Object literals syntax.</li>
+          <li class="fragment">Rest and spread operators.</li>
+        </ul>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>Be nice to indicate that a variabled is a constant.</p>
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h1><code>const</code></h1>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+const LIGHT_SPEED = 299792458;
+
+// TypeError: Assignment to constant variable.
+LIGHT_SPEED = 300;
+
+/*Stil 299792458*/
+LIGHT_SPEED;
+
+//throws TypeError: redeclaration of const
+const LIGHT_SPEED = "";
+</code></pre>
+      </section>
+      <section data-background="images/const_in_action.png" data-background-size="95%">
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>Be nice to not leak variables all over the place.</p>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+var object = {ohhai: "value"};
+for(var i in object){
+  var item = object[i];
+}
+console.log(i); // "ohhai", that's annoying.
+console.log(item); //"value", argh!
+</code></pre>
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h1><code>let</code></h1>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+let fruits = ["apple", "orange"];
+//keep it in the loop
+for(let i=0; i &lt; fruits.length; i++){
+  let fruit = fruits[i];
+}
+//Reference error: no `fruit` or `i` here!
+console.log(fruit, i);
+        </code></pre>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>Having to check if a value was passed to a method... is annoying!</p>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+// Today... life is hard
+function myFunction(arg1){
+  var arg1 = arg1 || "some default";
+}
+</code></pre>
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h1>Argument defaults</h1>
+      </section>
+      <section class="worksinfirefox">
+        <pre class="javascript"><code contenteditable data-trim>
+function Car(make = "ford", model = "t"){
+  this.make = make;
+  this.model = model;
+}
+
+const car = new Car();
+
+//prints "ford"
+console.log(car.make);
+</code></pre>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p><code>for</code> loop syntax is cumbersome.</p>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <pre class="javascript"><code contenteditable data-trim>
+//Today... life is hard
+var h1s = document.querySelectorAll("h1");
+
+for(var i = 0; i &lt; h1s.length; i++){
+  var elem = h1s[i]
+  elem.style.color = "salmon";
+};
+
+//Or, the unexpected
+for(var elem in h1s){
+  //"length and item?!?!" ERROR!!
+  elem.style.color = "salmon";
+}
+</code></pre>
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h1><code>for ... of</code> (iterators)</h1>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+var h1s = document.querySelectorAll("h1");
+for (let elem of h1s) {
+  elem.style.color = "salmon";
+}
+</code></pre>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>Having to write <code>function</code> all the time causes carpal-tunnel syndrome.</p>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <pre class="javascript"><code contenteditable data-trim>
+//today
+function findEdible(fruits){
+  return fruits.filter(function(item){
+    return /^a/.test(item);
+  });
+}
+
+var fruits = ['apple','orange','apricot'];
+//Array [ "apple", "apricot" ]
+console.log(findEdible(fruits));
+</code></pre>
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h1>Arrow functions</h1>
+      </section>
+      <section data-background="images/disection.jpg">
+        <pre class="javascript"><code contenteditable>
+
+func = function(params) { statements; }
+
+
+
+arrow = (params) => { statements; }
+
+
+
+</code></pre>
+        <p class="attribution">Knitted Hello Kitty Dissection by <a href="https://www.flickr.com/photos/estonia76/">estonia76</a></p>
+      </section>
+      <section>
+        <h2>Fun rules to remember:</h2>
+        <ul>
+          <li class="fragment">1 argument, paranthesis "()" are optional.</li>
+          <li class="fragment">1 statement, the "{}" are optional.</li>
+          <li class="fragment">1 statement, "return" is optional.</li>
+        </ul>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>//long form
+var multiply = (x, y) => {
+  const z = 1;
+  return x * y * z;
+};
+multiply(2,3); //6
+
+//omitting optional bits
+var square = x => x * x;
+square(3); //9
+</code></pre>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+var fruits = ['apple','orange','apricot'];
+
+var edible = fruits.filter(
+  item => /^a/.test(item)
+);
+</code></pre>
+      </section>
+      <section>
+        <h2>Careful! scope of <code>this</code></h2>
+        <pre class="javascript"><code contenteditable data-trim>function Car (){
+  this.speed = 0;
+}
+
+Car.prototype.drive = (newSpeed) => {
+  this.speed = newSpeed;
+}
+
+var car = new Car();
+car.drive(1000);
+//prints: 0  (LOLWUT?)
+console.log(car.speed);
+console.log(window.speed); //1000
+</code></pre>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>String concatenation is repetitive and hard.</p>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <pre class="javascript"><code contenteditable data-trim>
+var data = [{name:"a", link:"page.html"}]
+function processData(data){
+  var ul = "<ul>\n";
+  for (var i = 0; i < data.length; i++) {
+    var item = data[i];
+    var li = '<li><a href="' + item.link;
+    li += '">' + item.name;
+    li += '</a><li>\n';
+    ul += li;
+  };
+  ul += "</ul>";
+  return ul;
+}
+processData(data);</code></pre>
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h1>Template strings</h1>
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h1>Meet <code>`</code> and <code>${}</code></h1>
+      </section>
+      <section>
+        <pre><code contenteditable data-trim data-noescape>
+var data = [{name:"a",link:"page.html"}]
+function processData(data){
+  var listItems = "";
+  for (let item of data) {
+    let li = `
+       &lt;li>
+          &lt;a href="${item.link}">
+           ${item.name}
+          &lt;/a>
+       &lt;/li>`;
+    listItems += li;
+  };<
+  return `&lt;ul>${listItems}&lt;/ul>`;
+}
+processData(data);</code></pre>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>It's hard to create a collection of unique things.</p>
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h1>Sets</h1>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+var fruits = new Set([
+  "apple", "orange", "orange", "pear"
+]);
+fruits.has("banana"); //false
+fruits.add("banana");
+fruits.add("banana"); //ignored
+fruits.size; //4
+fruits.delete("apple");
+for(let fruit of fruits){ /*fruit*/ };
+fruits.clear(); //empty the set
+</code></pre>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>Hey! What about key/value pairs !?</p>
+      </section>
+      <section data-background="images/bg_stars.svg" data-background-size="90%">
+        <h1>Maps</h1>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+let store = new Map([["socks",
+  {amount: 5, cost: 10}
+]]);
+
+store.set("shoes",{amount:5,cost:99.99});
+store.has("socks"); //true
+for(let item of store){ /*item is array*/ }
+for(let key of store.keys()){ }
+store.clear();
+</code></pre>
+      </section>
+      <section>
+        <h2>WeakMap and WeakSet</h2>
+        <ul>
+          <li>Memory management</li>
+        </ul>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>Creating object literals is cumbersome.</p>
+      </section>
+      <section>
+        <h2>Today</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+function makeTruck(make){
+  return {
+    make: make,
+    drive: function(){
+      return "Driving!"
+    }
+  };
+}
+</code></pre>
+      </section>
+      <section>
+        <h2>Enhanced properties</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+function makeTruck(make){
+  return {
+    make,
+    drive() {
+      return "Driving!"
+    }
+  };
+}
+</code></pre>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>Extracting properties from objects/arrays leads to redundant code.</p>
+      </section>
+      <section>
+        <h2>Today</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+var people = [
+  ["Bob", "S", "Smith"],
+  ["Mary", "W", "Smith"],
+];
+
+var objects = people.map((person) => {
+  var firstName = person[0];
+  var lastName = person[2];
+  return {
+    firstName,
+    lastName,
+  };
+});
+        </code></pre>
+      </section>
+      <section>
+        <h2>Array matching</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+var people = [
+  ["Bob", "S", "Smith"],
+  ["Mary", "W", "Smith"],
+];
+// We name the positions into variables
+var objects = people
+  // Note we assigning names in
+  // the function's arguments!
+  .map(
+    ([firstName, , lastName])
+      => ({firstName, lastName})
+  );
+</code></pre>
+      </section>
+      <section>
+        <h2>Manually destructuring objects</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+var person = {
+  firstName: "Mary",
+  middleInitial: "S",
+  lastName: "Smith",
+  address: "123 JS Street",
+};
+
+var firstName = person.firstName;
+var middleInitial = person.lastName;
+var lastName = person.middleInitial;
+</code></pre>
+      </section>
+      <section>
+        <h2>Destructuring assignment</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+const person = {
+  firstName: "Mary",
+  middleInitial: "S",
+  lastName: "Smith",
+  address: "123 JS Street",
+};
+
+const {
+  firstName,
+  lastName,
+  middleInitial
+} = person;
+</code></pre>
+      </section>
+      <section>
+        <h2>Destructuring assignment - take 2</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+const person = {
+  firstName: "Mary",
+  middleInitial: "S",
+  lastName: "Smith",
+  address: "123 JS Street",
+};
+
+const {
+  firstName: first,
+  lastName: last,
+  middleInitial: middle
+} = person;
+</code></pre>
+      </section>
+      <section>
+        <h2>Destructuring: arguments </h2>
+        <pre class="javascript"><code contenteditable data-trim>
+var person = {
+  firstName: "Mary",
+  middleInitial: "S",
+  lastName: "Smith",
+  address: "123 JS Street",
+};
+
+function x({firstName: f, lastName: l}) {
+  return [f, l];
+}
+</code></pre>
+      </section>
+      <section>
+        <h2>Destructuring: deep matching</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+var person = {
+  firstName: "Mary",
+  address: {
+    street:"123 JS Street",
+  },
+};
+
+function x({firstName: f, address: {street}}) {
+  return [f, street];
+}
+</code></pre>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>Making functions with open-ended arguments is hard</p>
+      </section>
+      <section>
+        <h2>Rest and spread</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+var cookieMonster = {
+  whatIAte: [],
+  eat(){
+    for(let cookies of arguments){
+      this.cookies.push(cookie);
+    }
+  }
+}
+</code></pre>
+      </section>
+      <section>
+        <h2>Rest and spread</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+const food = ["choc-chip", "timtam"];
+const cookieMonster = {
+  whatIAte: [],
+  eat(...cookies){
+    //push is "variadic", so "spread" out
+    this.whatIAte.push(...cookies);
+  },
+};
+cookieMonster.eat(...food);
+</code></pre>
+      </section>
+      <section>
+        <h2>Rest and spread</h2>
+        <pre class="javascript"><code contenteditable data-trim>
+function namedFunction(first, second, ...theRest){
+  console.log(first, second, theRest);
+}
+namedFunction(1); //1, undefined, []
+namedFunction(1, 2); //1, 2, []
+namedFunction(1, 2, 3, 4); //1, 2, [3, 4]
+</code></pre>
+      </section>
+      <section data-background="images/shinny.svg" data-background-size="35%" data-background-position="bottom right">
+        <h1>End of Part 1</h1>
+      </section>
+      <section>
+        <h1>Part 2 - Async JS</h1>
+        <h2>Promise, generators, async/await</h2>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>Async programming in JS is hard.</p>
+        <aside class="notes">
+          <ul>
+            <li>The web platform is a event driven environment.</li>
+            <li>We need to deal with all sorts of events.</li>
+            <li>Mouse events, key events, network events, etc.</li>
+            <li>And we are constantly trying to react to these events.</li>
+            <li>Right now, we have to chain callbacks together to handle events. This is hard today...</li>
+          </ul>
+        </aside>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <pre class="javascript"><code contenteditable data-trim>
+/* Pyramid of DOOM! */
+try{
+  var url = "someU.data";
+  showIndicator("fadein",
+    downloadData(url, function(data){
+       processData(rawData, function(data){
+          displayData(data, removeIndicator)
+     });
+    });
+  });
+}catch(e){
+  console.log("argh... screw this!");
+  throw e;
+}
+</code></pre>
+        <aside class="notes">
+          <ul>
+            <li>We commonly end up writing code like the above to handle different actions. </li>
+            <li>Dictated by the user experience we want to create.</li>
+            <li>As well as coping with errors - which I didn't do above</li>
+            <li>It gets really complicated. And it's really hard to reason about.</li>
+          </ul>
+        </aside>
+      </section>
+      <section>
+        <h2>Promises</h2>
+      </section>
+      <section data-background="images/barista.jpg">
+        <h2 style="color: white;
+           text-shadow: .01em .01em .02em black;
+           background-color: rgba(0,0,0,.5)">Deferred asynchronous operations</h2>
+        <p class="attribution">photo by <a href="https://www.flickr.com/photos/alper/">Alper Çuğun</a></p>
+      </section>
+      <section>
+        <h2>Promise as token</h2>
+        <img src="images/token.jpg">
+      </section>
+      <section>
+        <h2>Broken promises</h2>
+        <ul>
+          <li class="fragment">"That's not on the menu!"</li>
+          <li class="fragment">"We closed the shop already!"</li>
+          <li class="fragment">"The kitchen is closed!"</li>
+          <li class="fragment">"I hate this person. I refuse."</li>
+        </ul>
+      </section>
+      <section data-background="images/promises.svg" data-background-size="20%" data-background-position="bottom right">
+        <h2>Promises - states</h2>
+        <ul>
+          <li class="fragment">Pending.</li>
+          <li class="fragment">Fulfilled.</li>
+          <li class="fragment">Rejected.</li>
+          <li class="fragment"><code>then</code> - handle fulfill/reject + chain promises.</li>
+          <li class="fragment"><code>catch</code> - errors in the chain.</li>
+        </ul>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim style="font-size: .8em">
+var p1 = Promise.resolve("fulfilled!");
+p1.then((msg) => console.log(msg)); // "fulfilled!"
+
+var p2 = Promise.reject("rejected!");
+p2.then(undefined, (msg) => console.log(msg)); // "Rejected!"
+
+var p3 = new Promise((resolve, reject) => {
+  if (condition) resolve();
+  if (otherCondition) reject();
+  throw new Error("Error!");
+});
+
+//fulfill, reject, catch
+p3.then(success, failure)
+  .catch(recover);
+</code></pre>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+var p = new Promise((resolve,reject)=>{
+  //I'm on vacation in July!
+  if(new Date().getMonth() === 7){
+    reject(new Error("On vacation!"));
+  } else {
+    resolve("Yeah, do it!");
+  }
+});
+p.then(
+  successMsg => console.log(successMsg),
+  rejectMsg => console.log(rejectMsg)
+);
+</code></pre>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+function canIdoTheWork(date){
+  return (date.getMonth() === 7)?
+      Promise.reject(new Error("On vacation!"))
+    : Promise.resolve("Let's do this!");
+}
+canIdoTheWork(new Date()).then(
+  successMsg => console.log(successMsg),
+  rejectMsg => console.log(rejectMsg)
+);
+</code></pre>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim style="font-size: .8em">
+var barista = {
+  skills: new Set(['Americano', 'Latte']),
+  get mood() { return Math.round(Math.random()) },
+  makeCoffee(type = 'Americano') {
+    if (!this.skills.has(type)) {
+      return Promise.reject(new Error(`No ${type} for you!`));
+    }
+    return new Promise((resolve, reject) => {
+      // 1 second to make a coffee
+      setTimeout(() => { // 1 second to make a coffee
+        if(this.mood){
+          return resolve(`Here is your ${type}`);
+        }
+        reject(new Error("I quit!"));
+      }, 1000);
+    });
+  }
+}</code></pre>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim style="font-size: .8em">
+var success = msg => console.log(msg, "thanks!");
+var fail = err => console.log(err);
+
+//reject straight away!
+barista.makeCoffee("milkshake").then(undefined, fail);
+
+//Make me an Americano and a latte
+barista.makeCoffee()
+  .then(() => barista.makeCoffee("Latte"))
+  .then(success).catch(fail);
+</code></pre>
+      </section>
+      <section>
+        <h2>Awaiting multiple promises</h2>
+      </section>
+      <section>
+        <pre class="javascript"><code contenteditable data-trim>
+var car1 = new Car("one"),
+var car2 = new Car("two"),
+var car3 = new Car("three"),
+var carRace = [car1.drive(), car2.drive(), car3.drive()];
+
+Promise.race(carRace).then(e => console.log(e));
+Promise.all(carRace).then(data => console.log(data));
+</code></pre>
+      </section>
+      <section>
+        <h2>Iterables</h2>
+      </section>
+      <section>
+        <h2>How does JS determine if something is iterable?</h2>
+      </section>
+      <section>
+        <h2>Symbol.iterator</h2>
+        <p class="fragment">A zero arguments function that, when called:</p>
+        <ul>
+          <li class="fragment">Returns an object.</li>
+          <li class="fragment">has .next() method.</li>
+          <li class="fragment">returns Object:
+            <ul>
+              <li class="fragment">with a <code>.done</code> and <code>.value</code> property</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <pre class="javascript"><code>
+// A zero arguments function that, when called:
+obj[Symbol.iterator] = function() {
+  // Returns an object
+  return {
+    // has .next() method.
+    next() {
+      // that returns an object with:
+      return {
+        value: "", // value prop
+        done: trueOrFalse, // done prop
+      };
+    }
+  };
+};
+      </code></pre>
+      </section>
+      <section>
+        <h2>Iterables</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Class</th>
+              <th>Example</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>String</td>
+              <td>s = "hello"</td>
+              <td>"h", "e" ...</td>
+            </tr>
+            <tr>
+              <td>Set</td>
+              <td><code>var set = new Set([1,2,3])</code></td>
+              <td>1,2,3</td>
+            </tr>
+            <tr>
+              <td>Map</td>
+              <td>new Map([["name", value]])</td>
+              <td>["name", value]</td>
+            </tr>
+            <tr>
+              <td>NodeList</td>
+              <td><code>document.querySelectorAll("*")</code></td>
+              <td>HTMLElement</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section>
+        <h2>Fancier Iterators (example)</h2>
+        <ul>
+          <li>map.keys()</li>
+          <li>map.values()</li>
+          <li>map.entries()</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Generator functions</h2>
+      </section>
+      <section class="whiteboard" data-state="problem" data-background="images/blackboard.jpg">
+        <h2>Problem</h2>
+        <p>Hard to represent lazy lists in JS.</p>
+      </section>
+      <section>
+        <h3>Generator functions</h3>
+        <pre><code contenteditable data-trim>
+function* myGenerator(){
+  yield 1;
+}
+var genObj = myGenerator();
+        </code></pre>
+      </section>
+      <section>
+        <h2>yield</h2>
+        <p>
+          <q>Yield control of execution at this point</q>.</p>
+      </section>
+      <section>
+        <h3>Generator functions</h3>
+        <pre><code contenteditable data-trim>
+function* myGenerator(){
+  yield 1;
+}
+var genObj = myGenerator();
+var result = myGenerator.next(); //run!
+// result = Object { value: 1, done: false }
+        </code></pre>
+      </section>
+      <section>
+        <h3><code>{value: 1, done: false}</code></h3>
+        <p>This looks familiar...</p>
+      </section>
+      <section>
+        <h3>Generator functions</h3>
+        <pre><code contenteditable data-trim>
+function* myGenerator(value){
+  yield 1;
+  return value;
+}
+var genObj = myGenerator("hello there");
+var result = genObj.next(); //run!
+// result = Object { value: 1, done: false }
+result = genObj.next(); //keep going!
+// result = Object { value: "hello there", done: true }
+        </code></pre>
+      </section>
+      <section>
+        <h3>Generator Object API</h3>
+        <ul>
+          <li class="fragment"><code>.next(any value) => {value, done}</code></li>
+          <li class="fragment"><code>.throw(Error) => {value, done}</code></li>
+          <li class="fragment"><code>.return(value) => {value, done}</code></li>
+        </ul>
+      </section>
+      <section>
+        <h3>Generator functions</h3>
+        <pre><code contenteditable data-trim>
+function* myGenerator(value){
+  let result = yield value;
+  return result;
+}
+var genObj = myGenerator("hello there");
+var value = genObj.next().value; //first run!
+genObj.next(value.toUpperCase());
+console.log(genObj.next().value); // "HELLO THERE"
+        </code></pre>
+      </section>
+      <section data-background="images/iterator_generators.png" data-background-size="100%" data-background-position="center center">
+      </section>
+      <section>
+        <h3>What if the yielded value is bad?</h3>
+        <pre><code contenteditable data-trim>
+function* myGenerator(value){
+  let result = "";
+  try{
+    result = yield 1;
+  } catch (err) {
+    result = "recovered";
+  }
+  return result;
+}
+var genObj = myGenerator("hello there");
+var result = genObj.next().value;
+if(typeof result !== "string"){
+  result = genObj.throw(new TypeError("Expected a string"));
+}
+console.log(result.value); // "Recovered"
+        </code></pre>
+      </section>
+      <section>
+        <h2>Understanding async/await</h2>
+      </section>
+      <section>
+        <h3>Promises everywhere...</h3>
+        <pre class="javascript"><code contenteditable>
+fetch(url)
+  .then(response => response.json())
+  .then(json => processJson)
+  .catch(handleError)
+  .then(moarThen)
+  .catch(err => throw err)
+        </code></pre>
+      </section>
+      <section>
+        <h3>Tomorrow...</h3>
+        <pre class="javascript"><code contenteditable>
+async function getJSON(url){
+  let response = await fetch(url);
+  let result;
+  try{
+    let json = await response.json();
+    result = processJson(json);
+  } catch (err) {
+    result = attempToRecover(err);
+  }
+  return result;
+}
+getJSON(someURL)
+  .then(showIt)
+  .catch(handleError);</code></pre>
+      </section>
+      <section data-background="images/the_dream.png" data-background-size="100%" data-background-position="center center">
+      </section>
+      <section>
+        <h3>How does it work?</h3>
+        <ul>
+          <li class="fragment">Exploits generators + promises.</li>
+          <li class="fragment">Flow control and error handling.</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Generator</h3>
+        <pre  class="javascript"><code contenteditable data-trim>
+function* getURL(url){
+  //...
+}
+// Generator object - initializes closure
+let getFoo = getURL("/foo");
+        </code></pre>
+      </section>
+      <section>
+        <h3>Generator Object API (revisited)</h3>
+        <ul>
+          <li class="fragment"><code>.next(any value) => {value, done}</code></li>
+          <li class="fragment"><code>.throw(Error) => {value, done}</code></li>
+          <li class="fragment"><code>.return(value) => {value, done}</code></li>
+        </ul>
+      </section>
+      <section>
+        <h3>Generator</h3>
+        <pre><code class="javascript" contenteditable data-trim>
+function* getURL(url){
+  let response = yield fetch(url);
+}
+// Generator object - initializes closure
+let getFoo = getURL("/foo");
+let {value: promise} = getFoo.next();
+        </code></pre>
+      </section>
+      <section data-background="images/prom.png" data-background-size="90%" data-background-position="center center">
+      </section>
+      <section data-background="images/prom_gen.png" data-background-size="90%" data-background-position="center center">
+      </section>
+      <section>
+        <h3>Generator</h3>
+        <pre><code class="javascript" contenteditable data-trim>
+function* getURL(url){
+  let response = yield fetch(url);
+  return yield response.text();
+}
+// "Generator" object;
+let getFoo = getURL("/foo");
+// Prime the pump - run to first yield!
+let {value: promise} = getFoo.next();
+promise
+  .then(res => getFoo.next(res).value)
+  .then(text => console.log(text));</code></pre>
+      </section>
+      <section>
+        <h3>Error handling</h3>
+        <pre><code class="javascript" contenteditable data-trim>
+promise
+  .then(res => getFoo.next(res).value)
+  .then(text => console.log(text))
+  .catch(err => getFoo.throw(error));
+</code></pre>
+      </section>
+      <section>
+        <h2>Need to handle multiple "steps"</h2>
+        <pre><code class="javascript" contenteditable data-trim>
+async(function* getJSON(url){
+  let response = yield fetch(url);
+  let result;
+  try{
+    let json = yield response.json();
+    result = processJson(json);
+  } catch (err) {
+    result = attempToRecover(err);
+  }
+  return result;
+});
+</code></pre>
+      </section>
+      <section>
+        <h2>How would we buid it?</h2>
+      </section>
+      <section data-background="images/async1.png" data-background-size="90%">
+      </section>
+      <section data-background="images/async2.png" data-background-size="90%">
+      </section>
+      <section data-background="images/async3.png" data-background-size="90%">
+      </section>
+      <section data-background="images/async4.png" data-background-size="90%">
+      </section>
+      <section data-background="images/async5.png" data-background-size="90%">
+      </section>
+      <section data-background="images/async6.png" data-background-size="90%">
+      </section>
+      <section>
+        <h2>Real examples</h2>
+      </section>
+      <section data-background="images/git_as_promised.png" data-background-size="90%">
+      </section>
+      <section data-background="images/mapping_test.png" data-background-size="90%">
+      </section>
+      <section data-background="images/mapping_test.png" data-background-size="90%">
+      </section> 
+      <section>
+        <h2>Bad times...</h2>
+        <ul>
+          <li>Don't forget <code>yield</code>/<code>await</code></li>
+          <li><code>window.onload = async function foo(){...}</code></li>
+          <li><code>calling foo() with no `.catch`</code></li>
+        </ul>
+      </section>
+      <section data-background="images/shinny.svg" data-background-size="35%" data-background-position="bottom right">
+        <h1>End of Part 2</h1>
+      </section>
+      <section data-background="images/shinny.svg" data-background-size="35%" data-background-position="bottom right">
+        <h1>Part 3 - Putting ES6 to Work</h1>
+        <h2>Service Workers and realted APIs</h2>
+      </section>
+      <section>
+        <h2>We now can use...</h2>
+        <ul>
+          <li>Any Web API that uses promises.</li>
+          <li>Wrap legacy APIs using promises (if we want).</li>
+          <li>Build custom task runners.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Let's take a site offline!</h2>
+      </section>
+    </div>
+  </div>
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+  <script>
+  // Full list of configuration options available here:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    history: true,
+    center: true,
+
+    theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+    transition: Reveal.getQueryHash().transition || 'fade', // default/cube/page/concave/zoom/linear/fade/none
+
+    // Parallax scrolling
+    //parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+    //parallaxBackgroundSize: '2100px 900px',
+
+    // Optional libraries used to extend on reveal.js
+    dependencies: [{
+      src: 'lib/js/classList.js',
+      condition: function() {
+        return !document.body.classList;
+      }
+    }, {
+      src: 'plugin/markdown/marked.js',
+      condition: function() {
+        return !!document.querySelector('[data-markdown]');
+      }
+    }, {
+      src: 'plugin/markdown/markdown.js',
+      condition: function() {
+        return !!document.querySelector('[data-markdown]');
+      }
+    }, {
+      src: 'plugin/highlight/highlight.js',
+      async: true,
+      callback: function() {
+        hljs.initHighlightingOnLoad();
+      }
+    }, {
+      src: 'plugin/zoom-js/zoom.js',
+      async: true,
+      condition: function() {
+        return !!document.body.classList;
+      }
+    }, ]
+  });
+  </script>
+</body>
+
+</html>
