@@ -8,7 +8,7 @@ console.log(`
   ${"💖 CODE CONFERENCE JS WORKSHOP! 💖".underline.yellow}
 `)
 
-if(parseInt(/\d/.exec(process.version)[0]) < 7){
+if(parseInt(/\d/.exec(process.version)[0]) < 6){
   console.error(`
     🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
     🔥 ${"Please to update NodeJS 6.3.1+".red} 🔥
