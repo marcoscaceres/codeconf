@@ -1,4 +1,4 @@
-(function(){
+(function() {
   "use strict";
   // Service Worker registration (installation/activation).
   if (!("serviceWorker" in navigator)) {
@@ -7,20 +7,20 @@
   }
 
   function doRegistration() {
-    async.task(function* () {
+    async.task(function*() {
       console.info("Attempting to register SW");
       let reg = yield navigator.serviceWorker.getRegistration();
       if (reg) {
-        console.info("Already registered");
+        console.info("Already registered.");
         return;
       }
-      console.info("No registration, so register");
+      console.info("No registration, so register.");
       try {
         reg = yield navigator.serviceWorker.register("sw.js");
       } catch (err) {
         console.error("SW Registration failed:", err);
       }
-    });
+    }).catch(err => );
   }
   window.addEventListener("load", doRegistration);
 }());
