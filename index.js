@@ -1,12 +1,25 @@
+"use strict";
 const express = require('express');
 const app = express();
 const colors = require('colors');
 app.use(express.static('.'));
 
+console.log(`
+  ${"💖 CODE CONFERENCE JS WORKSHOP! 💖".underline.yellow}
+`)
+
+if(parseInt(/\d/.exec(process.version)[0]) < 7){
+  console.error(`
+    🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    🔥 ${"Please to update NodeJS 6.3.1+".red} 🔥
+    🔥                                🔥
+    🔥  ${"https://nodejs.org/".blue}           🔥
+    🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  `);
+}
+
 app.listen(3000, () => {
   console.log(`
-
-  ${"💖 CODE CONFERENCE JS WORKSHOP! 💖".underline.yellow}
 
   ${"Slides".blue}:
 
